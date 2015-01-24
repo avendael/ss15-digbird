@@ -1,3 +1,0 @@
-[submodule "app/elements/firebase-element"]
-	path = app/elements/firebase-element
-	url = git@github.com:Polymer/firebase-element.git
