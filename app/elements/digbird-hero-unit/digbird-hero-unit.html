@@ -1,3 +1,6 @@
+<link rel="import" href="/bower_components/firebase-element/firebase-element.html">
+<link rel="import" href="/bower_components/pvc-globals/pvc-globals.html">
+
 <link rel="import" href="/bower_components/core-selector/core-selector.html">
 
 <polymer-element name="digbird-hero-unit" attributes="interval">
@@ -206,8 +209,25 @@
       }
     </style>
 
-    <core-selector selected="{{selected}}">
-      <content id="content" select="*" ></content>
+    <firebase-element id="base"
+                      location="{{globals.firebase_url}}/birdies"
+                      data="{{birdies}}"
+                      log="true"
+                      keys="{{keys}}">
+    </firebase-element>
+
+    <pvc-globals values="{{globals}}"></pvc-globals>
+
+    <core-selector id="selector"
+                   selected="{{selected}}">
+      <template repeat="{{key in keys}}">
+        <content>
+          <summary>
+            <h1>{{birdies[key]['title']}}</h1>
+            <p>{{birdies[key]['content']}}</p>
+          </summary>
+        </content>
+      </template>
     </core-selector>
 
     <div id="paginator" horizontal layout center-justified>
@@ -222,10 +242,11 @@
     Polymer('digbird-hero-unit', {
       interval: null,
       selected: 0,
-      domReady: function() {
-        // TODO: use onMutation to watch for children updates.
-        this.panels = Array.prototype.slice.call(
-            this.$.content.getDistributedNodes());
+      observe: {
+        birdies: 'onBirdiesChanged'
+      },
+      onBirdiesChanged: function(oldValue, newValue) {
+        this.panels = this.keys;
         this.startCycler();
       },
       next: function(opt_Index, opt_backwards) {
