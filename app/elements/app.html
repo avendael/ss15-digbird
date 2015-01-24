@@ -10,6 +10,7 @@
 <link rel="import" href="/bower_components/firebase-element/firebase-element.html">
 <link rel="import" href="/bower_components/firebase-element/firebase-login.html">
 <link rel="import" href="/bower_components/pvc-globals/pvc-globals.html">
+<link rel="import" href="/bower_components/app-router/app-router.html">
 
 <polymer-element name="dig-bird-app">
   <template>
@@ -88,8 +89,14 @@
           <template if="{{user}}">{{user.github.username}}</template>
         </core-toolbar>
       </div>
-      <div class="content">
 
+      <div class="content">
+        <app-router>
+          <app-route path="/"
+                     import="/elements/admin/main.html"
+                     element="dig-bird-main">
+          </app-route>
+        </app-router>
       </div>
     </core-header-panel>
   </template>

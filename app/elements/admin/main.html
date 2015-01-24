@@ -1,0 +1,75 @@
+<link rel="import" href="/bower_components/firebase-element/firebase-element.html">
+<link rel="import" href="/bower_components/pvc-globals/pvc-globals.html">
+
+<link rel="import" href="/bower_components/paper-dialog/paper-action-dialog.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+
+<polymer-element name="dig-bird-main">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .new-birdy {
+        padding: 20px;
+        text-align: center;
+      }
+    </style>
+
+    <firebase-element id="base"
+                      location="https://blazing-torch-2411.firebaseio.com/birdies"
+                      data="{{birdies}}"
+                      keys="{{keys}}">
+    </firebase-element>
+
+    <pvc-globals values="{{globals}}"></pvc-globals>
+
+    <!-- Insert Hero Component here -->
+    <div class="new-birdy">
+      <button on-click="{{openDialog}}">
+        Add new Birdy
+
+        <paper-action-dialog id="birdyDialog" heading="New Birdy" transition="core-transition-bottom">
+          <form>
+            <paper-input id="title" label="Title"></paper-input>
+          </form>
+          <paper-button affirmative autofocus on-click="{{submitBirdy}}">Add</paper-button>
+        </paper-action-dialog>
+      </button>
+    </div>
+  </template>
+
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer({
+        openDialog: function() {
+          this.$.birdyDialog.toggle();
+        },
+        submitBirdy: function() {
+          if (!this.$.title.value.length) {
+            alert('Please write a title.');
+            return;
+          }
+
+          console.log(this.globals);
+          var birdy = this.$.base.push({
+            title: this.$.title.value,
+            user: {
+              uid: this.globals.currentUser.uid,
+              username: this.globals.currentUser.github.username,
+              avatar_url: this.globals.currentUser.github.cachedUserProfile.avatar_url,
+              html_url: this.globals.currentUser.github.cachedUserProfile.html_url
+            },
+            timestamp: new Date().getTime()
+          });
+
+          this.$.title.value = '';
+        }
+      });
+
+    })();
+  </script>
+</polymer-element>
