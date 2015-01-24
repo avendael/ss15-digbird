@@ -59,7 +59,7 @@
     <firebase-login id="baseLogin"
                     user="{{user}}"
                     statusKnown="{{statusKnown}}"
-                    location="https://blazing-torch-2411.firebaseio.com"
+                    location="{{globals.firebase_url}}"
                     provider="github"
                     on-login="{{onLogin}}"
                     on-error="{{onLoginError}}">
@@ -105,6 +105,12 @@
       'use strict';
 
       Polymer({
+        ready: function() {
+          this.globals.firebase_name = 'blazing-torch-2411'
+          this.globals.firebase_url = 'https://' +
+                                      this.globals.firebase_name +
+                                      '.firebaseio.com';
+        },
         login: function() {
           this.$.baseLogin.login();
         },

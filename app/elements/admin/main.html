@@ -18,7 +18,7 @@
     </style>
 
     <firebase-element id="base"
-                      location="https://blazing-torch-2411.firebaseio.com/birdies"
+                      location="{{globals.firebase_url}}/birdies"
                       data="{{birdies}}"
                       keys="{{keys}}">
     </firebase-element>
@@ -27,18 +27,26 @@
 
     <!-- Insert Hero Component here -->
 
-    <div class="new-birdy"
+    <div id="add-button"
+         class="new-birdy"
          hidden?="{{!globals.isLoggedIn}}">
       <button on-click="{{openDialog}}">
         Add new Birdy
 
-        <paper-action-dialog id="birdyDialog" heading="New Birdy" transition="core-transition-bottom">
+        <paper-action-dialog id="birdyDialog"
+                             heading="New Birdy"
+                             transition="core-transition-bottom">
           <form>
             <paper-input id="title" label="Title"></paper-input>
           </form>
-          <paper-button affirmative autofocus on-click="{{submitBirdy}}">Add</paper-button>
+          <paper-button affirmative autofocus on-click="{{submitBirdy}}">
+            Add
+          </paper-button>
         </paper-action-dialog>
       </button>
+    </div>
+
+    <div id="marketspeak">
     </div>
   </template>
 
