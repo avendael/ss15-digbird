@@ -68,6 +68,10 @@
         height: 45px;
         margin-top: 15px;
       }
+
+      #topbar-menu .menu {
+        line-height: 16px;
+      }
     </style>
 
     <firebase-login id="baseLogin"
@@ -89,18 +93,16 @@
               <img src="../images/digbird-white.png">
             </a>
           </div>
-          <paper-menu-button halign="right">
-            <paper-icon-button icon="social:person"></paper-icon-button>
-            <paper-dropdown class="dropdown" transition="">
+          <paper-menu-button relative tabindex="0" id="topbar-menu">
+            <paper-icon-button icon="social:person" role="button" tabindex="0" aria-label="menu"></paper-icon-button>
+            <paper-dropdown class="dropdown" transition tabindex="-1">
               <core-menu class="menu">
-                <paper-item on-click="{{login}}"
-                            hidden?="{{!statusKnown || user}}">
-                  Login
-                </paper-item>
-                <paper-item on-click="{{logout}}"
-                            hidden?="{{!statusKnown || !user}}">
-                  Logout
-                </paper-item>
+                <paper-item tabindex="0"
+                            on-click="{{login}}"
+                            hidden?="{{!statusKnown || user}}">Login</paper-item>
+                <paper-item tabindex="0"
+                            on-click="{{logout}}"
+                            hidden?="{{!statusKnown || !user}}">Logout</paper-item>
               </core-menu>
             </paper-dropdown>
           </paper-menu-button>
