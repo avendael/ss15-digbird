@@ -12,5 +12,5 @@ to the component through an interface.
 ## Tech Stack
 
 * Polymer
-* Ember?
 * Transloadit
+* Firebase
