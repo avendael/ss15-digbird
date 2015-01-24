@@ -130,8 +130,9 @@ module.exports = function (grunt) {
       },
       test: {
         options: {
+          port: 4200,
           open: {
-            target: 'http://localhost:<%= connect.options.port %>/test'
+            target: 'http://localhost:<%= connect.test.options.port %>/test'
           },
           middleware: function () {
             return [
