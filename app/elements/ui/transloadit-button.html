@@ -1,22 +1,42 @@
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/pvc-globals/pvc-globals.html">
+
 <polymer-element name="transloadit-button">
   <template>
     <style>
+      #file-upload-field {
+        display: none;
+      }
     </style>
+    <pvc-globals values="{{globals}}"></pvc-globals>
 
     <form id="upload-form" action="?upload=complete" enctype="multipart/form-data" method="POST">
-      <input type="file" name="my_file" multiple="multiple" />
+      <input id="file-upload-field" type="file" name="file_upload" multiple="multiple" />
+      <input id="user-id-field" type="hidden" name="uid" />
+
+      <paper-button raised on-click="{{openFileBrowser}}">
+        <core-icon icon="file-upload"></core-icon>
+        Upload an Image
+      </paper-button>
     </form>
   </template>
 
   <script>
     Polymer('transloadit-button', {
+      observe: {
+        globals: 'updateUserInfo'
+      },
+      updateUserInfo: function(oldValue, newValue) {
+        if (newValue && newValue.currentUser) {
+          this.$['user-id-field'].value = newValue.currentUser.uid;
+        }
+      },
       ready: function() {
+        var $el = this.$;
+
         // We reference our html form here
-        $(this.$['upload-form']).transloadit({
-          fields: {
-            // TODO: Gather more information about the file and user here
-            // Refer at https://transloadit.com/docs/
-          },
+        $($el['upload-form']).transloadit({
+          fields: 'input[name=uid]',
 
           // We want to wait for all encodings to finish before the form
           // is submitted.
@@ -29,6 +49,7 @@
 
           onSuccess: function(assembly) {
             // TODO: Notify Firebase
+            debugger
           },
 
           params: {
@@ -41,6 +62,10 @@
             template_id: "7f964520a3ff11e4ad0f73815468df20"
           }
         });
+      },
+
+      openFileBrowser: function() {
+        this.$['file-upload-field'].click();
       }
     });
   </script>
