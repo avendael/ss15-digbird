@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 <link rel="import" href="/bower_components/pvc-globals/pvc-globals.html">
 
-<polymer-element name="transloadit-button">
+<polymer-element name="transloadit-button" attributes="change onSuccess">
   <template>
     <style>
       #file-upload-field {
@@ -32,6 +32,7 @@
         }
       },
       ready: function() {
+        var _this = this;
         var $el = this.$;
 
         // We reference our html form here
@@ -48,8 +49,8 @@
           triggerUploadOnFileSelection: true,
 
           onSuccess: function(assembly) {
-            // TODO: Notify Firebase
-            debugger
+            var url = assembly.results.optimized[0].url;
+            _this.change = url;
           },
 
           params: {

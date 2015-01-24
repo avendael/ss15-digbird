@@ -68,6 +68,13 @@
                              heading="New Birdy"
                              transition="core-transition-bottom">
           <form>
+            <template if="{{imageUrl}}">
+              <img src="{{imageUrl}}">
+            </template>
+
+            <transloadit-button change="{{imageUrl}}"></transloadit-button>
+            <input id="image-url" type="hidden" value="{{imageUrl}}"/>
+
             <paper-input id="title" label="Title"></paper-input>
             <paper-input id="content" label="Content"></paper-input>
           </form>
