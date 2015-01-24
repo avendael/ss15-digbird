@@ -110,13 +110,16 @@
         },
         logout: function() {
           this.$.baseLogin.logout();
+          this.globals.isLoggedIn = false;
         },
         onLogin: function() {
           this.globals.currentUser = this.user;
+          this.globals.isLoggedIn = true;
         },
         onLoginError: function(err) {
           console.log('An error occurred.');
           console.error(err);
+          this.globals.isLoggedIn = false;
         }
       });
 

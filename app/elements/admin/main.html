@@ -26,7 +26,9 @@
     <pvc-globals values="{{globals}}"></pvc-globals>
 
     <!-- Insert Hero Component here -->
-    <div class="new-birdy">
+
+    <div class="new-birdy"
+         hidden?="{{!globals.isLoggedIn}}">
       <button on-click="{{openDialog}}">
         Add new Birdy
 
