@@ -213,6 +213,8 @@
                       location="{{globals.firebase_url}}/birdies"
                       data="{{birdies}}"
                       log="true"
+                      orderByChild="owner_id"
+                      equalTo="{{globals.currentUser.uid || 'github:10689365'}}"
                       keys="{{keys}}">
     </firebase-element>
 
@@ -230,7 +232,8 @@
       </template>
     </core-selector>
 
-    <div id="paginator" horizontal layout center-justified>
+    <div id="paginator"
+         horizontal layout center-justified>
       <template repeat="{{item, i in panels}}">
         <span class="circle {{ {active: i == selected} | tokenList }}"
               on-tap="{{selectPanel}}"></span>
@@ -247,6 +250,7 @@
       },
       onBirdiesChanged: function(oldValue, newValue) {
         this.panels = this.keys;
+        this.hasKeys = this.keys.length > 0;
         this.startCycler();
       },
       next: function(opt_Index, opt_backwards) {

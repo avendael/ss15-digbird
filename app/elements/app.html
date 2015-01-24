@@ -139,6 +139,7 @@
         logout: function() {
           this.$.baseLogin.logout();
           this.globals.isLoggedIn = false;
+          this.globals.currentUser = null;
         },
         onLogin: function() {
           this.globals.currentUser = this.user;

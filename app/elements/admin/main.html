@@ -18,19 +18,44 @@
       summary {
         width: 100%;
       }
+      #empty-state {
+        height: 310px;
+        text-align: center;
+      }
+      #preview {
+        height: 310px;
+      }
     </style>
 
     <firebase-element id="base"
                       location="{{globals.firebase_url}}/birdies"
                       data="{{birdies}}"
+                      orderByChild="owner_id"
+                      equalTo="{{globals.currentUser.uid}}"
                       keys="{{keys}}">
     </firebase-element>
 
     <pvc-globals values="{{globals}}"></pvc-globals>
 
-    <div layout vertical center>
-      <digbird-hero-unit interval="5000" layout vertical center>
+    <div id="preview"
+         layout vertical center>
+      <digbird-hero-unit interval="5000"
+                         hidden?="{{!hasKeys}}"
+                         layout vertical center>
       </digbird-hero-unit>
+
+      <div id="empty-state"
+           hidden?="{{hasKeys || isLoadingData}}"
+           layout vertical center>
+        <summary>
+          <h1>You have no Birdies yet</h1>
+          <p>Press the button below to add a new Birdy</p>
+        </summary>
+      </div>
+
+      <digbird-loading hidden?="{{!isLoadingData}}"
+                       layout vertical center>
+      </digbird-loading>
     </div>
 
     <div id="add-button"
@@ -44,7 +69,7 @@
                              transition="core-transition-bottom">
           <form>
             <paper-input id="title" label="Title"></paper-input>
-            <paper-input id="content" label="Title"></paper-input>
+            <paper-input id="content" label="Content"></paper-input>
           </form>
           <paper-button affirmative autofocus on-click="{{submitBirdy}}">
             Add
@@ -62,6 +87,17 @@
       'use strict';
 
       Polymer({
+        observe: {
+          birdies: 'onBirdiesChanged'
+        },
+        onBirdiesChanged: function(oldValue, newValue) {
+          this.hasKeys = this.keys.length > 0;
+          this.isLoadingData = false;
+        },
+
+        domReady: function() {
+          this.isLoadingData = true;
+        },
         openDialog: function() {
           this.$.birdyDialog.toggle();
         },
@@ -75,6 +111,7 @@
           var birdy = this.$.base.push({
             title: this.$.title.value,
             content: this.$.content.value,
+            owner_id: this.globals.currentUser.uid,
             user: {
               uid: this.globals.currentUser.uid,
               username: this.globals.currentUser.github.username,
