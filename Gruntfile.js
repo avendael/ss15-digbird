@@ -17,6 +17,7 @@ module.exports = function (grunt) {
   // load all grunt tasks
   require('load-grunt-tasks')(grunt);
   grunt.loadNpmTasks('web-component-tester');
+  grunt.loadNpmTasks('grunt-divshot');
 
   // configurable paths
   var yeomanConfig = {
@@ -26,6 +27,18 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     yeoman: yeomanConfig,
+    divshot: {
+      server: {
+        options: {
+        }
+      }
+    },
+    'divshot:push': {
+      production: {
+      },
+      staging: {
+      }
+    },
     watch: {
       options: {
         nospawn: true,
