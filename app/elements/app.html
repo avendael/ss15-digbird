@@ -54,6 +54,20 @@
       .content {
         background: #fff;
       }
+
+      .panel {
+        padding: 75px 15px;
+      }
+
+      #logo {
+      }
+
+      #logo img {
+        padding: 0;
+        width: 200px;
+        height: 45px;
+        margin-top: 15px;
+      }
     </style>
 
     <firebase-login id="baseLogin"
@@ -70,7 +84,11 @@
     <core-header-panel>
       <div class="core-header">
         <core-toolbar>
-          <div flex>Dig Bird</div>
+          <div id="logo" flex>
+            <a href="#">
+              <img src="../images/digbird-white.png">
+            </a>
+          </div>
           <paper-menu-button halign="right">
             <paper-icon-button icon="social:person"></paper-icon-button>
             <paper-dropdown class="dropdown" transition="">

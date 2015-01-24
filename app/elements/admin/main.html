@@ -15,6 +15,9 @@
         padding: 20px;
         text-align: center;
       }
+      summary {
+        width: 100%;
+      }
     </style>
 
     <firebase-element id="base"
@@ -25,7 +28,23 @@
 
     <pvc-globals values="{{globals}}"></pvc-globals>
 
-    <!-- Insert Hero Component here -->
+    <div layout vertical center>
+      <digbird-hero-unit interval="5000" layout vertical center>
+        <div>
+          <summary>
+            <h1>Buy your acme widgets online</h1>
+            <p>Acme widgets brings you the best of both worlds everyday, from top to bottom</p>
+          </summary>
+        </div>
+
+        <div>
+          <summary>
+            <h1>Mechanical keyboard showdown</h1>
+            <p>Get more mechanical keyboards on your purchase of acme widgets!</p>
+          </summary>
+        </div>
+      </digbird-hero-unit>
+    </div>
 
     <div id="add-button"
          class="new-birdy"
@@ -38,6 +57,7 @@
                              transition="core-transition-bottom">
           <form>
             <paper-input id="title" label="Title"></paper-input>
+            <paper-input id="content" label="Title"></paper-input>
           </form>
           <paper-button affirmative autofocus on-click="{{submitBirdy}}">
             Add
@@ -67,6 +87,7 @@
           console.log(this.globals);
           var birdy = this.$.base.push({
             title: this.$.title.value,
+            content: this.$.content.value,
             user: {
               uid: this.globals.currentUser.uid,
               username: this.globals.currentUser.github.username,
@@ -77,6 +98,7 @@
           });
 
           this.$.title.value = '';
+          this.$.content.value = '';
         }
       });
 
