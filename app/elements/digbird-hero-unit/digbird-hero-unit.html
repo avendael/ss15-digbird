@@ -227,7 +227,7 @@
     <core-selector id="selector"
                    selected="{{selected}}">
       <template repeat="{{key in keys}}">
-        <content>
+        <content select="div">
           <div style="background: url({{birdies[key]['image_url']}}) center; color: {{birdies[key]['text_color']}}">
             <summary>
               <h1>{{birdies[key]['title']}}</h1>
