@@ -37,6 +37,8 @@ module.exports = function (grunt) {
       production: {
       },
       staging: {
+      },
+      development: {
       }
     },
     watch: {
@@ -306,6 +308,27 @@ module.exports = function (grunt) {
         }
       }
     }
+  });
+
+  grunt.registerTask('deploy:development', function () {
+    grunt.task.run([
+      'build',
+      'divshot:push:development'
+    ]);
+  });
+
+  grunt.registerTask('deploy:staging', function () {
+    grunt.task.run([
+      'build',
+      'divshot:push:staging'
+    ]);
+  });
+
+  grunt.registerTask('deploy:production', function () {
+    grunt.task.run([
+      'build',
+      'divshot:push:production'
+    ]);
   });
 
   grunt.registerTask('server', function (target) {
