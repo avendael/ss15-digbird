@@ -17,6 +17,7 @@ module.exports = function (grunt) {
   // load all grunt tasks
   require('load-grunt-tasks')(grunt);
   grunt.loadNpmTasks('web-component-tester');
+  grunt.loadNpmTasks('grunt-aws-s3');
   grunt.loadNpmTasks('grunt-divshot');
 
   // configurable paths
@@ -26,6 +27,8 @@ module.exports = function (grunt) {
   };
 
   grunt.initConfig({
+    config: grunt.file.readJSON('config/local.json'), // Read the file
+
     yeoman: yeomanConfig,
     divshot: {
       server: {
@@ -307,8 +310,65 @@ module.exports = function (grunt) {
           threshold: 80
         }
       }
-    }
+    },
+
+    aws_s3: {
+      options: {
+        accessKeyId: '<%= config.aws.AWSAccessKeyId %>', // Use the variables
+        secretAccessKey: '<%= config.aws.AWSSecretKey %>', // You can also use env variables
+        region: 'ap-southeast-1',
+        uploadConcurrency: 5, // 5 simultaneous uploads
+        downloadConcurrency: 5 // 5 simultaneous downloads
+      },
+
+      development: {
+        options: {
+          bucket: 'digbird-dev-units',
+          differential: true // Only uploads the files that have changed
+        },
+        files: [
+          {expand: true, cwd: 'demos/units/', src: ['**'], dest: 'units/'},
+          {expand: true, cwd: 'app/bower_components/firebase-element/', src: ['**'], dest: 'dependencies/firebase-element'},
+          {expand: true, cwd: 'app/bower_components/pvc-globals/', src: ['**'], dest: 'dependencies/pvc-globals'},
+          {expand: true, cwd: 'app/bower_components/core-selector/', src: ['**'], dest: 'dependencies/core-selector'},
+          {expand: true, cwd: 'app/bower_components/polymer/', src: ['**'], dest: 'dependencies/polymer'},
+          {expand: true, cwd: 'app/bower_components/firebase/', src: ['**'], dest: 'dependencies/firebase'},
+          {expand: true, cwd: 'app/bower_components/core-selection/', src: ['**'], dest: 'dependencies/core-selection'},
+        ]
+      },
+      staging: {
+        options: {
+          bucket: 'digbird-staging',
+          differential: true // Only uploads the files that have changed
+        },
+        files: [
+          {expand: true, cwd: 'app/digbird-hero-unit/', src: ['**'], dest: 'units/'},
+        ]
+      },
+      production: {
+        options: {
+          bucket: 'digbird-production',
+          params: {
+            ContentEncoding: 'gzip' // applies to all the files!
+          }
+        },
+        files: [
+          {expand: true, cwd: 'app/digbird-hero-unit/', src: ['**'], dest: 'units/', params: {CacheControl: '20000'}},
+        ]
+      },
+      clean_production: {
+        options: {
+          bucket: 'digbird-production',
+          debug: true // Doesn't actually delete but shows log
+        },
+        files: [
+          {dest: 'units/', action: 'delete'},
+        ]
+      }
+    },
   });
+
+
 
   grunt.registerTask('deploy:development', function () {
     grunt.task.run([

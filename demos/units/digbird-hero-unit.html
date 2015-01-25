@@ -1,0 +1,306 @@
+<link rel="import" href="../dependencies/firebase-element/firebase-element.html">
+<link rel="import" href="../dependencies/pvc-globals/pvc-globals.html">
+<link rel="import" href="../dependencies/core-selector/core-selector.html">
+
+<polymer-element name="digbird-hero-unit" attributes="interval digbird-user">
+  <template>
+    <style>
+      h1, h2, h3, h4, h5 {
+        font-weight: 300;
+        letter-spacing: -0.01em;
+        line-height: 48px;
+        margin: 0;
+      }
+      h1 {
+        font-size: 40px;
+      }
+      polyfill-next-selector {
+        content: ':host h1'
+      }
+      ::content h1 {
+        font-size: 40px;
+      }
+      h2 {
+        font-size: 24px;
+      }
+      polyfill-next-selector {
+        content: ':host h2'
+      }
+      ::content h2 {
+        font-size: 24px;
+      }
+      h3 {
+        font-size: 20px;
+      }
+      polyfill-next-selector {
+        content: ':host h3'
+      }
+      ::content h3 {
+        font-size: 20px;
+      }
+      h4 {
+        font-size: 16px;
+        font-weight: 500;
+      }
+      polyfill-next-selector {
+        content: ':host h4'
+      }
+      ::content h4 {
+        font-size: 16px;
+        font-weight: 500;
+      }
+      h5 {
+        font-size: 12px;
+        font-weight: 500;
+      }
+      polyfill-next-selector {
+        content: ':host h5'
+      }
+      ::content h5 {
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .start {
+        color: #536dfe;
+      }
+      .elements {
+        color: #7986cb;
+      }
+      .guide {
+        color: #ff4080;
+      }
+      .main-bg {
+        background-color: #eee !important;
+      }
+      .main-purple {
+        background-color: #1f2036;
+      }
+      .main-purple paper-button {
+        background: #262742 !important;
+        color: white;
+        fill: currentcolor;
+      }
+      .main-purple paper-button:hover {
+        background: #3a3b56 !important;
+      }
+      code, pre {
+        color: #9f499b;
+        font-family: "Source Code Pro", Monaco, Menlo, Consolas, "Courier New", monospace;
+      }
+      pre, .prettyprint {
+        background-color: #fafafa;
+        padding: 16px;
+        margin: 30px 0;
+      }
+      pre .typ, pre .inline, .prettyprint .typ, .prettyprint .inline {
+        color: #6b499f;
+      }
+      pre .pun, .prettyprint .pun {
+        color: #5c6bc0;
+      }
+      pre .str, pre .string, .prettyprint .str, .prettyprint .string {
+        color: #ff4081;
+      }
+      pre .pln, .prettyprint .pln {
+        color: #7986cb;
+      }
+      pre .kwd, .prettyprint .kwd {
+        color: #d61a7f;
+      }
+      pre .atn, pre .attribute-name, .prettyprint .atn, .prettyprint .attribute-name {
+        color: #6b499f;
+      }
+      pre .atv, pre .attribute-value, .prettyprint .atv, .prettyprint .attribute-value {
+        color: #7986cb;
+      }
+      pre .com, pre .comment, .prettyprint .com, .prettyprint .comment {
+        color: #8a8a8a;
+      }
+      :host {
+        width: 100%;
+        height: 310px;
+        -moz-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+      }
+      polyfill-next-selector {
+        content: ':host > core-selector > div'
+      }
+      ::content>div {
+        display: -webkit-fullbleed;
+        display: fullbleed;
+        transform: translate3d(15px,  0,  0);
+        -moz-transition: all 1s ease-in-out;
+        -o-transition: all 1s ease-in-out;
+        -webkit-transition: all 1s ease-in-out;
+        transition: all 1s ease-in-out;
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        background-position: center;
+      }
+      polyfill-next-selector {
+        content: ':host > core-selector > div > summary'
+      }
+      ::content>div>summary {
+        padding-top: 15px;
+      }
+      polyfill-next-selector {
+        content: ':host .core-selected'
+      }
+      ::content>.core-selected {
+        opacity: 1;
+        visibility: visible;
+        z-index: 0;
+        transform: translate3d(0,  0,  0);
+      }
+      #paginator {
+        text-align: center;
+        position: absolute;
+        bottom: 15px;
+        width: 100%
+      }
+      .circle {
+        cursor: pointer;
+        display: inline-block;
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        border: 1px solid #e6e6e6;
+        -moz-transition: background-color 1s ease-in-out;
+        -o-transition: background-color 1s ease-in-out;
+        -webkit-transition: background-color 1s ease-in-out;
+        transition: background-color 1s ease-in-out;
+        margin: 0 3px;
+      }
+      .circle.active {
+        background-color: #e6e6e6 !important;
+      }
+      ::content {
+        width: 100%;
+      }
+      @media only screen and (max-width: 850px) {
+        polyfill-next-selector {
+          content: ':host > core-selector > *'
+        }
+        ::content>* {
+          -webkit-box-orient: vertical;
+          -webkit-flex-direction: column;
+          -moz-flex-direction: column;
+          -ms-flex-direction: column;
+          -o-flex-direction: column;
+          flex-direction: column;
+          width: 100%
+        }
+        polyfill-unscoped-rule {
+          content: '#feature :host';
+          height: 680px;
+        }
+        :host {
+          height: 680px !important;
+        }
+        #paginator {
+          width: 100%
+        }
+      }
+    </style>
+
+    <firebase-element id="base"
+                      location="{{globals.firebase_url}}/birdies"
+                      data="{{birdies}}"
+                      log="true"
+                      orderByChild="owner_id"
+                      equalTo="{{currentUser}}"
+                      keys="{{keys}}">
+    </firebase-element>
+
+    <pvc-globals values="{{globals}}"></pvc-globals>
+
+    <core-selector id="selector"
+                   selected="{{selected}}">
+      <template repeat="{{key in keys}}">
+        <content>
+          <div style="background: url({{birdies[key]['image_url']}}) center; color: {{birdies[key]['text_color']}}">
+            <summary>
+              <h1>{{birdies[key]['title']}}</h1>
+              <p>{{birdies[key]['content']}}</p>
+              <p>{{birdies[key]['image_url']}}</p>
+            </summary>
+          </div>
+        </content>
+      </template>
+    </core-selector>
+
+    <div id="paginator"
+         horizontal layout center-justified>
+      <template repeat="{{item, i in panels}}">
+        <span class="circle {{ {active: i == selected} | tokenList }}"
+              on-tap="{{selectPanel}}"></span>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    Polymer('digbird-hero-unit', {
+      interval: null,
+      selected: 0,
+      observe: {
+        birdies: 'onBirdiesChanged',
+        'globals.currentUser': 'onUserChanged'
+      },
+      onBirdiesChanged: function(oldValue, newValue) {
+        this.panels = this.keys;
+        this.startCycler();
+      },
+      onUserChanged: function(oldValue, newValue) {
+        console.log('user changed ' + JSON.stringify(oldValue) + ' ' + JSON.stringify(newValue));
+      },
+
+      created: function() {
+        this.isLoadingData = true;
+      },
+      ready: function() {
+        this.globals.firebase_name = 'blazing-torch-2411';
+        this.globals.firebase_url = 'https://' + this.globals.firebase_name + '.firebaseio.com';
+        this.currentUser = this.globals.currentUser ? this.globals.currentUser.uid : this.attributes['digbird-user'].value;
+        console.log('the user ' + this.currentUser);
+      },
+      next: function(opt_Index, opt_backwards) {
+        var backwards = opt_backwards == true;
+
+        if (opt_Index != undefined) {
+          this.selected = opt_Index;
+        } else {
+          this.selected += (backwards ? -1 : 1);
+          this.selected %= this.panels.length;
+          if (this.selected < 0) {
+            this.selected = this.panels.length - 1;
+          }
+        }
+      },
+      selectPanel: function(e, detail, sender) {
+        this.stopCycler();
+        this.next(e.target.templateInstance.model.i);
+        this.startCycler();
+      },
+      stopCycler: function(e, detail, sender) {
+        if (this.intervalId) {
+          window.clearInterval(this.intervalId);
+        }
+      },
+      startCycler: function(e, detail, sender) {
+        if (this.interval != null) {
+          this.intervalId = window.setInterval(
+              this.next.bind(this), this.interval);
+        }
+      }
+    });
+  </script>
+</polymer-element>
