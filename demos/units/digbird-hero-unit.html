@@ -260,6 +260,17 @@
         birdies: 'onBirdiesChanged'
       },
       onBirdiesChanged: function(oldValue, newValue) {
+        console.log('birdies changed');
+        this.panels = this.keys;
+        this.startCycler();
+      },
+      onBirdyAdded: function(event) {
+        this.stopCycler();
+        this.panels = this.keys;
+        this.startCycler();
+      },
+      onBirdyRemoved: function(event) {
+        this.stopCycler();
         this.panels = this.keys;
         this.startCycler();
       },
@@ -280,6 +291,8 @@
         this.isLoadingData = true;
       },
       ready: function() {
+        this.globals.firebase_name = 'blazing-torch-2411';
+        this.globals.firebase_url = 'https://' + this.globals.firebase_name + '.firebaseio.com';
         this.currentUser = this.globals.currentUser ? this.globals.currentUser.uid : this.attributes['digbird-user'].value;
       },
       detached: function() {
