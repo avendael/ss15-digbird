@@ -44,20 +44,17 @@
               <img src="../images/logo.png">
             </a>
           </div>
-          <paper-menu-button relative tabindex="0" id="topbar-menu">
-            <paper-icon-button icon="social:person" role="button" tabindex="0" aria-label="menu"></paper-icon-button>
-            <paper-dropdown class="dropdown" transition tabindex="-1">
-              <core-menu class="menu">
-                <paper-item tabindex="0"
-                            on-click="{{login}}"
-                            hidden?="{{!statusKnown || user}}">Login</paper-item>
-                <paper-item tabindex="0"
-                            on-click="{{logout}}"
-                            hidden?="{{!statusKnown || !user}}">Logout</paper-item>
-              </core-menu>
-            </paper-dropdown>
-          </paper-menu-button>
           <template if="{{user}}">
+            <paper-menu-button relative tabindex="0" id="topbar-menu">
+              <paper-icon-button icon="social:person" role="button" tabindex="0" aria-label="menu"></paper-icon-button>
+              <paper-dropdown class="dropdown" transition tabindex="-1">
+                <core-menu class="menu">
+                  <paper-item tabindex="0"
+                              on-click="{{logout}}"
+                              hidden?="{{!statusKnown || !user}}">Logout</paper-item>
+                </core-menu>
+              </paper-dropdown>
+            </paper-menu-button>
             <paper-button on-click="{{navigateAdmin}}">
               {{user.github.username}}
             </paper-button>
