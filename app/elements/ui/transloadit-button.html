@@ -51,6 +51,10 @@
           onSuccess: function(assembly) {
             var url = assembly.results.optimized[0].url;
             _this.change = url;
+
+            if (_this.onSuccess) {
+              _this.onSuccess(url);
+            }
           },
 
           params: {
