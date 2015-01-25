@@ -4,6 +4,7 @@
 <link rel="import" href="/bower_components/paper-dialog/paper-action-dialog.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 <link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/bower_components/font-awesome-polymer-icons/fa-icons.html">
 
 <polymer-element name="dig-bird-main">
   <template>
@@ -45,6 +46,7 @@
          class="new-birdy"
          hidden?="{{!globals.isLoggedIn}}">
       <paper-button raised on-click="{{openDialog}}">
+        <core-icon icon="fa:plus-circle"></core-icon>
         Add new Birdy
 
         <paper-action-dialog id="birdyDialog"
