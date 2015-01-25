@@ -105,11 +105,17 @@
       'use strict';
 
       Polymer({
+        birdies: [],
         observe: {
           birdies: 'onBirdiesChanged'
         },
+
         onBirdiesChanged: function(oldValue, newValue) {
-          this.globals.hasKeys = this.keys.length > 0;
+          if (newValue) {
+            this.globals.hasKeys = this.keys.length > 0;
+          } else {
+            this.globals.hasKeys = false;
+          }
           this.globals.isLoadingData = false;
         },
         onBirdyRemoved: function(event) {

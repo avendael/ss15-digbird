@@ -65,7 +65,6 @@
           this.globals.currentUser = this.user;
           this.currentUser = this.user.uid;
           this.globals.isLoggedIn = true;
-          debugger
           document.querySelector('app-router').go('/admin');
         },
         onLoginError: function(err) {
