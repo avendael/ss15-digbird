@@ -218,7 +218,7 @@
                       data="{{birdies}}"
                       log="true"
                       orderByChild="owner_id"
-                      equalTo="{{globals.currentUser.uid || 'digbird-user'}}"
+                      equalTo="{{currentUser}}"
                       keys="{{keys}}">
     </firebase-element>
 
@@ -257,12 +257,14 @@
       },
       onBirdiesChanged: function(oldValue, newValue) {
         this.panels = this.keys;
-//        this.hasKeys = this.keys.length > 0;
         this.startCycler();
       },
 
       created: function() {
         this.isLoadingData = true;
+      },
+      ready: function() {
+        this.currentUser = this.globals.currentUser ? this.globals.currentUser.uid : this.attributes['digbird-user'].value;
         console.log(this.attributes['digbird-user']);
       },
       next: function(opt_Index, opt_backwards) {
