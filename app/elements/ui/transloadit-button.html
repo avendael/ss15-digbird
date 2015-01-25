@@ -49,7 +49,7 @@
           triggerUploadOnFileSelection: true,
 
           onSuccess: function(assembly) {
-            var url = assembly.results.optimized[0].url;
+            var url = assembly.results[':original'][0].url;
             _this.change = url;
 
             if (_this.onSuccess) {
