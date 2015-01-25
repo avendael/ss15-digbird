@@ -1,0 +1,34 @@
+:host {
+  display: block;
+}
+
+.new-birdy {
+  padding: 20px;
+  text-align: center;
+}
+
+summary {
+  width: 100%;
+}
+
+#empty-state {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  padding: 50px 30%;
+  border: 5px dashed #DFDFDF;
+}
+
+#preview {
+  height: 310px;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+#add-button {
+  background-color: #F5F5F5;
+}

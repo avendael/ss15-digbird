@@ -67,6 +67,22 @@ core-toolbar {
   background-color: #1F1F37;
   color: #fff;
   padding: 75px 15px;
+  border-top: 1px solid #c9c8c8;
+  border-bottom: 1px solid #232323;
+  position: relative;
+  z-index: 16;
+}
+
+#marketspeak:after {
+  background: url(/images/feathers-b.png) center repeat;
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  opacity: 0.7;
+  z-index: -1;
 }
 
 footer {

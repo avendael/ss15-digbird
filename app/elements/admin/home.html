@@ -8,7 +8,7 @@
 
 <polymer-element name="dig-bird-home">
   <template>
-    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/admin/home.css">
 
     <firebase-login id="baseLogin"
                     user="{{user}}"
@@ -35,7 +35,7 @@
                        layout vertical center>
     </digbird-hero-unit>
 
-    <div id="sign-in" hidden?="{{globals.isLoggedIn || globals.isLoadingData}}">
+    <div id="sign-in" hidden?="{{globals.isLoggedIn}}">
       <paper-button raised on-click="{{login}}">
         <core-icon icon="fa:github"></core-icon>
         Sign In
