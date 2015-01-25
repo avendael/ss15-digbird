@@ -73,6 +73,17 @@ core-toolbar {
   z-index: 16;
 }
 
+#marketspeak .panel:after {
+  background: url('/images/plane.png') no-repeat center;
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
 #marketspeak:after {
   background: url(/images/feathers-b.png) center repeat;
   content: "";
