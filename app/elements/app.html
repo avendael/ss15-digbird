@@ -45,33 +45,40 @@
               <img src="../images/logo.png">
             </a>
           </div>
-          <paper-menu-button relative tabindex="0" id="topbar-menu">
-            <paper-icon-button icon="social:person" role="button" tabindex="0" aria-label="menu"></paper-icon-button>
-            <paper-dropdown class="dropdown" transition tabindex="-1">
-              <core-menu class="menu">
-                <paper-item tabindex="0"
-                            on-click="{{login}}"
-                            hidden?="{{!statusKnown || user}}">Login</paper-item>
-                <paper-item tabindex="0"
-                            on-click="{{logout}}"
-                            hidden?="{{!statusKnown || !user}}">Logout</paper-item>
-              </core-menu>
-            </paper-dropdown>
-          </paper-menu-button>
-          <template if="{{user}}">{{user.github.username}}</template>
+
+          <template if="{{user}}">
+            <paper-menu-button relative tabindex="0" id="topbar-menu">
+              <paper-icon-button icon="social:person" role="button" tabindex="0" aria-label="menu"></paper-icon-button>
+              <paper-dropdown class="dropdown" transition tabindex="-1">
+                <core-menu class="menu">
+                  <paper-item tabindex="0"
+                              on-click="{{logout}}"
+                              hidden?="{{!statusKnown}}">Logout</paper-item>
+                </core-menu>
+              </paper-dropdown>
+            </paper-menu-button>
+            <div class="username">{{user.github.username}}</div>
+          </template>
         </core-toolbar>
       </div>
 
       <div class="content">
-        <app-router>
+        <app-router hidden?="{{!globals.isLoggedIn}}">
           <app-route path="/"
                      import="/elements/admin/main.html"
                      element="dig-bird-main">
           </app-route>
         </app-router>
+
+        <digbird-hero-unit interval="5000"
+                           digbird-user="github:10689365"
+                           hidden?="{{globals.isLoggedIn}}"
+                           layout vertical center>
+        </digbird-hero-unit>
       </div>
 
-      <div id="sign-in" hidden?="{{globals.isLoggedIn || globals.isLoadingData}}">
+
+      <div id="sign-in" hidden?="{{globals.isLoggedIn}}">
         <paper-button raised on-click="{{login}}">
           <core-icon icon="fa:github"></core-icon>
           Sign In
