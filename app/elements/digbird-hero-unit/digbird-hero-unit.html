@@ -261,22 +261,18 @@
         birdies: 'onBirdiesChanged'
       },
       onBirdiesChanged: function(oldValue, newValue) {
-        console.log('birdies changed');
         this.panels = this.keys;
         this.startCycler();
       },
       onBirdyAdded: function(event) {
-        this.stopCycler();
         this.panels = this.keys;
         this.startCycler();
       },
       onBirdyRemoved: function(event) {
-        this.stopCycler();
         this.panels = this.keys;
         this.startCycler();
       },
       onBirdyChanged: function(event) {
-        this.stopCycler();
         this.panels = this.keys;
         this.startCycler();
       },

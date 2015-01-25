@@ -186,6 +186,9 @@
       ::content {
         width: 100%;
       }
+      .carousel-item {
+        background-color: #8691D0 !important;
+      }
       @media only screen and (max-width: 850px) {
         polyfill-next-selector {
           content: ':host > core-selector > *'
@@ -217,20 +220,23 @@
                       data="{{birdies}}"
                       orderByChild="owner_id"
                       equalTo="{{currentUser}}"
-                      keys="{{keys}}">
+                      keys="{{keys}}"
+                      childEvents
+                      on-child-added="{{onBirdyAdded}}"
+                      on-child-removed="{{onBirdyRemoved}}"
+                      on-child-changed="{{onBirdyChanged}}" >
     </firebase-element>
 
     <pvc-globals values="{{globals}}"></pvc-globals>
 
     <core-selector id="selector"
                    selected="{{selected}}">
-      <template repeat="{{key in keys}}">
-        <content>
-          <div style="background: url({{birdies[key]['image_url']}}) center; color: {{birdies[key]['text_color']}}">
+      <template id="carousel-items" repeat="{{key in keys}}">
+        <content select="div">
+          <div class="carousel-item" style="background: url({{birdies[key]['image_url']}}) center no-repeat; color: {{birdies[key]['text_color']}}">
             <summary>
               <h1>{{birdies[key]['title']}}</h1>
               <p>{{birdies[key]['content']}}</p>
-              <p>{{birdies[key]['image_url']}}</p>
             </summary>
           </div>
         </content>
@@ -251,25 +257,33 @@
       interval: null,
       selected: 0,
       observe: {
-        birdies: 'onBirdiesChanged',
-        'globals.currentUser': 'onUserChanged'
+        birdies: 'onBirdiesChanged'
       },
       onBirdiesChanged: function(oldValue, newValue) {
         this.panels = this.keys;
         this.startCycler();
       },
-      onUserChanged: function(oldValue, newValue) {
-        console.log('user changed ' + JSON.stringify(oldValue) + ' ' + JSON.stringify(newValue));
+      onBirdyAdded: function(event) {
+        this.panels = this.keys;
+        this.startCycler();
+      },
+      onBirdyRemoved: function(event) {
+        this.panels = this.keys;
+        this.startCycler();
+      },
+      onBirdyChanged: function(event) {
+        this.panels = this.keys;
+        this.startCycler();
       },
 
       created: function() {
         this.isLoadingData = true;
       },
       ready: function() {
-        this.globals.firebase_name = 'blazing-torch-2411';
-        this.globals.firebase_url = 'https://' + this.globals.firebase_name + '.firebaseio.com';
         this.currentUser = this.globals.currentUser ? this.globals.currentUser.uid : this.attributes['digbird-user'].value;
-        console.log('the user ' + this.currentUser);
+      },
+      detached: function() {
+        this.stopCycler();
       },
       next: function(opt_Index, opt_backwards) {
         var backwards = opt_backwards == true;
