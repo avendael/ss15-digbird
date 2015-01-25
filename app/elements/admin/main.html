@@ -137,11 +137,6 @@
           this.$.birdyDialog.toggle();
         },
         submitBirdy: function() {
-          if (!this.$.title.value.length) {
-            alert('Please write a title.');
-            return;
-          }
-
           var birdy = this.$.base.push({
             title: this.$.title.value,
             content: this.$.content.value,
