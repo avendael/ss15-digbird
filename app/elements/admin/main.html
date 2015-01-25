@@ -40,13 +40,18 @@
 
     <pvc-globals values="{{globals}}"></pvc-globals>
 
-    <div id="preview"
-         layout vertical center>
+    <digbird-loading hidden?="{{birdies}}"
+                     layout vertical center>
+    </digbird-loading>
+
+    <template id="preview"
+              hidden?="{{!birdies}}"
+              layout vertical center>
       <digbird-hero-unit interval="5000"
                          hidden?="{{!hasKeys}}"
                          layout vertical center>
       </digbird-hero-unit>
-    </div>
+    </template>
 
     <div id="add-button"
          class="new-birdy"

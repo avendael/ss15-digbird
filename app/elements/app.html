@@ -62,7 +62,7 @@
         </core-toolbar>
       </div>
 
-      <div class="content" hidden?="{{isLoadingData}}">
+      <div class="content">
         <app-router>
           <app-route path="/"
                      import="/elements/admin/main.html"
@@ -71,16 +71,12 @@
         </app-router>
       </div>
 
-      <div id="sign-in" hidden?="{{globals.isLoggedIn || isLoadingData}}">
+      <div id="sign-in" hidden?="{{globals.isLoggedIn}}">
         <paper-button raised on-click="{{login}}">
           <core-icon icon="fa:github"></core-icon>
           Sign In
         </paper-button>
       </div>
-
-      <digbird-loading hidden?="{{!isLoadingData}}"
-                       layout vertical center>
-      </digbird-loading>
 
       <div id="marketspeak"
            hidden?="{{globals.isLoggedIn}}">
