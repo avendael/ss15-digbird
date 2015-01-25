@@ -73,6 +73,30 @@
       </paper-button>
     </div>
 
+    <div id="how-to">
+      <section>
+        <h3>HOW TO INSERT CAROUSEL INTO YOUR WEBSITE?</h3>
+
+        <p>First, upload your images using the button above.</p>
+
+        <p>Then, add the dependencies to your HTML header.</p>
+
+        <pre><code>
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.5.2/webcomponents.min.js&quot;&gt;&lt;/script&gt;
+&lt;link rel=&quot;import&quot; href=&quot;https://s3-ap-southeast-1.amazonaws.com/digbird-dev-units/units/digbird-hero-unit.html&quot;&gt;
+        </code></pre>
+
+        <p>Finally, add the web component somewhere in the body of your HTML.</p>
+
+        <pre><code>
+&lt;digbird-hero-unit interval=&quot;5000&quot;
+         digbird-user=&quot;{{globals.currentUser.uid}}&quot;
+         layout vertical center&gt;
+&lt;/digbird-hero-unit&gt;
+        </code></pre>
+      </section>
+    </div>
+
   </template>
 
   <script>
