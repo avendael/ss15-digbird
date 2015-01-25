@@ -281,6 +281,8 @@
         this.isLoadingData = true;
       },
       ready: function() {
+        this.globals.firebase_name = this.globals.firebase_name || 'blazing-torch-2411';
+        this.globals.firebase_url = 'https://' + this.globals.firebase_name + '.firebaseio.com';
         this.currentUser = this.globals.currentUser ? this.globals.currentUser.uid : this.attributes['digbird-user'].value;
       },
       detached: function() {
