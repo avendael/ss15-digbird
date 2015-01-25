@@ -97,12 +97,21 @@ core-toolbar {
 }
 
 footer {
-  padding: 50px 0;
-  text-align: center;
+  padding: 17px 20px;
+  background-color: rgb(14, 14, 14);
+  border-top: 2px solid rgb(211, 67, 11);
 }
 
-footer p {
+footer > img {
+  height: 28px;
+}
+
+footer > p {
   width: 100%;
+  text-align: right;
+  font-size: 0.7em;
+  margin: 0;
+  color: #AEAEAE;
 }
 
 .core-header .username{
