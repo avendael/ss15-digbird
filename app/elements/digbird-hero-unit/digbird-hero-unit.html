@@ -187,6 +187,9 @@
       ::content {
         width: 100%;
       }
+      .carousel-item {
+        background-color: #8691D0 !important;
+      }
       @media only screen and (max-width: 850px) {
         polyfill-next-selector {
           content: ':host > core-selector > *'
@@ -219,16 +222,20 @@
                       log="true"
                       orderByChild="owner_id"
                       equalTo="{{currentUser}}"
-                      keys="{{keys}}">
+                      keys="{{keys}}"
+                      childEvents
+                      on-child-added="{{onBirdyAdded}}"
+                      on-child-removed="{{onBirdyRemoved}}"
+                      on-child-changed="{{onBirdyChanged}}" >
     </firebase-element>
 
     <pvc-globals values="{{globals}}"></pvc-globals>
 
     <core-selector id="selector"
                    selected="{{selected}}">
-      <template repeat="{{key in keys}}">
+      <template id="carousel-items" repeat="{{key in keys}}">
         <content select="div">
-          <div style="background: url({{birdies[key]['image_url']}}) center; color: {{birdies[key]['text_color']}}">
+          <div class="carousel-item" style="background: url({{birdies[key]['image_url']}}) center no-repeat; color: {{birdies[key]['text_color']}}">
             <summary>
               <h1>{{birdies[key]['title']}}</h1>
               <p>{{birdies[key]['content']}}</p>
@@ -256,6 +263,21 @@
       },
       onBirdiesChanged: function(oldValue, newValue) {
         console.log('birdies changed');
+        this.panels = this.keys;
+        this.startCycler();
+      },
+      onBirdyAdded: function(event) {
+        this.stopCycler();
+        this.panels = this.keys;
+        this.startCycler();
+      },
+      onBirdyRemoved: function(event) {
+        this.stopCycler();
+        this.panels = this.keys;
+        this.startCycler();
+      },
+      onBirdyChanged: function(event) {
+        this.stopCycler();
         this.panels = this.keys;
         this.startCycler();
       },

@@ -15,7 +15,9 @@
                       orderByChild="owner_id"
                       equalTo="{{globals.currentUser.uid}}"
                       log="true"
-                      keys="{{keys}}">
+                      keys="{{keys}}"
+                      childEvents
+                      on-child-removed="{{onBirdyRemoved}}">
     </firebase-element>
 
     <pvc-globals values="{{globals}}"></pvc-globals>
@@ -81,6 +83,13 @@
         onBirdiesChanged: function(oldValue, newValue) {
           this.globals.hasKeys = this.keys.length > 0;
           this.globals.isLoadingData = false;
+        },
+        onBirdyRemoved: function(event) {
+          if (this.birdies === null) {
+            this.globals.hasKeys = false;
+          } else {
+            this.globals.hasKeys = this.keys.length > 0;
+          }
         },
 
         created: function() {
