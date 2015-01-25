@@ -105,9 +105,6 @@
           this.globals.firebase_url = 'https://' +
                                       this.globals.firebase_name +
                                       '.firebaseio.com';
-          setTimeout(function() {
-            _this.globals.isLoadingData = false;
-          }, 2000);
         },
         login: function() {
           this.$.baseLogin.login();
