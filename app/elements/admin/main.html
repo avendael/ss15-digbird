@@ -83,13 +83,12 @@
           this.globals.isLoadingData = false;
         },
 
+        created: function() {
+          this.imageUrl = null;
+        },
         ready: function() {
-          var _this = this;
-
-          setTimeout(function() {
-            _this.isLoadingData = false;
-            console.log('setting loading to false');
-          }, 2000);
+          this.globals.hasKeys = false;
+          this.globals.isLoadingData = true;
         },
         openDialog: function() {
           this.$.birdyDialog.toggle();
@@ -100,7 +99,6 @@
             return;
           }
 
-          console.log(this.globals);
           var birdy = this.$.base.push({
             title: this.$.title.value,
             content: this.$.content.value,
@@ -120,6 +118,7 @@
           this.$.content.value = '';
           this.$['image-url'].value = '';
           this.$['text-color'].value = '';
+          this.imageUrl = null;
         }
       });
 

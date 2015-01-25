@@ -17,6 +17,8 @@
   <template>
     <link rel="stylesheet" href="/styles/admin/home.css">
 
+    <pvc-globals values="{{globals}}"></pvc-globals>
+
     <firebase-login id="baseLogin"
                     user="{{user}}"
                     statusKnown="{{statusKnown}}"
@@ -33,8 +35,6 @@
                       equalTo="{{currentUser}}"
                       keys="{{keys}}">
     </firebase-element>
-
-    <pvc-globals values="{{globals}}"></pvc-globals>
 
     <core-header-panel>
       <div class="core-header">
@@ -92,7 +92,6 @@
         onBirdiesChanged: function(oldValue, newValue) {
           this.globals.isLoadingData = false;
           this.globals.hasKeys = this.keys.length > 0;
-          console.log('done loading');
         },
 
         ready: function() {
