@@ -62,11 +62,13 @@
               <img src="{{imageUrl}}">
             </template>
 
-            <transloadit-button change="{{imageUrl}}"></transloadit-button>
+            <transloadit-button change="{{imageUrl}}">
+            </transloadit-button>
             <input id="image-url" type="hidden" value="{{imageUrl}}"/>
 
             <paper-input id="title" label="Title"></paper-input>
             <paper-input id="content" label="Content"></paper-input>
+            <paper-input id="text-color" label="Text Color"></paper-input>
           </form>
           <paper-button affirmative autofocus on-click="{{submitBirdy}}">
             Add
@@ -102,6 +104,8 @@
             title: this.$.title.value,
             content: this.$.content.value,
             owner_id: this.globals.currentUser.uid,
+            image_url: this.$['image-url'].value,
+            text_color: this.$['text-color'].value,
             user: {
               uid: this.globals.currentUser.uid,
               username: this.globals.currentUser.github.username,

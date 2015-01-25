@@ -126,11 +126,11 @@
         transform: translateZ(0);
       }
       polyfill-next-selector {
-        content: ':host > core-selector > *'
+        content: ':host > core-selector > div'
       }
-      ::content>* {
-        display: -webkit-flex;
-        display: flex;
+      ::content>div {
+        display: -webkit-fullbleed;
+        display: fullbleed;
         transform: translate3d(15px,  0,  0);
         -moz-transition: all 1s ease-in-out;
         -o-transition: all 1s ease-in-out;
@@ -143,7 +143,15 @@
         left: 0;
         z-index: -1;
         width: 100%;
+        height: 100%;
         text-align: center;
+        background-position: center;
+      }
+      polyfill-next-selector {
+        content: ':host > core-selector > div > summary'
+      }
+      ::content>div>summary {
+        padding-top: 15px;
       }
       polyfill-next-selector {
         content: ':host .core-selected'
@@ -229,10 +237,13 @@
                    selected="{{selected}}">
       <template repeat="{{key in keys}}">
         <content>
-          <summary>
-            <h1>{{birdies[key]['title']}}</h1>
-            <p>{{birdies[key]['content']}}</p>
-          </summary>
+          <div style="background: url({{birdies[key]['image_url']}}) center; color: {{birdies[key]['text_color']}}">
+            <summary>
+              <h1>{{birdies[key]['title']}}</h1>
+              <p>{{birdies[key]['content']}}</p>
+              <p>{{birdies[key]['image_url']}}</p>
+            </summary>
+          </div>
         </content>
       </template>
     </core-selector>
