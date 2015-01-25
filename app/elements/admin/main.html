@@ -132,6 +132,9 @@
         ready: function() {
           this.globals.hasKeys = false;
           this.globals.isLoadingData = true;
+          if (!this.globals.currentUser) {
+            location.replace("/");
+          }
         },
         openDialog: function() {
           this.$.birdyDialog.toggle();
