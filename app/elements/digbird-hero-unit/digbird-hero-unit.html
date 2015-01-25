@@ -253,11 +253,15 @@
       interval: null,
       selected: 0,
       observe: {
-        birdies: 'onBirdiesChanged'
+        birdies: 'onBirdiesChanged',
+        'globals.currentUser': 'onUserChanged'
       },
       onBirdiesChanged: function(oldValue, newValue) {
         this.panels = this.keys;
         this.startCycler();
+      },
+      onUserChanged: function(oldValue, newValue) {
+        console.log('user changed ' + JSON.stringify(oldValue) + ' ' + JSON.stringify(newValue));
       },
 
       created: function() {
@@ -265,7 +269,7 @@
       },
       ready: function() {
         this.currentUser = this.globals.currentUser ? this.globals.currentUser.uid : this.attributes['digbird-user'].value;
-        console.log(this.attributes['digbird-user']);
+        console.log('the user ' + this.currentUser);
       },
       next: function(opt_Index, opt_backwards) {
         var backwards = opt_backwards == true;

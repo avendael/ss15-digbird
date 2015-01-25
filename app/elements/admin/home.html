@@ -1,0 +1,79 @@
+<link rel="import" href="/bower_components/firebase-element/firebase-element.html">
+<link rel="import" href="/bower_components/pvc-globals/pvc-globals.html">
+
+<link rel="import" href="/bower_components/paper-dialog/paper-action-dialog.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/bower_components/font-awesome-polymer-icons/fa-icons.html">
+
+<polymer-element name="dig-bird-home">
+  <template>
+    <link rel="stylesheet" href="/styles/header.css">
+
+    <firebase-login id="baseLogin"
+                    user="{{user}}"
+                    statusKnown="{{statusKnown}}"
+                    location="{{globals.firebase_url}}"
+                    provider="github"
+                    on-login="{{onLogin}}"
+                    on-error="{{onLoginError}}">
+    </firebase-login>
+
+    <firebase-element id="base"
+                      location="{{globals.firebase_url}}/birdies"
+                      data="{{birdies}}"
+                      log="true"
+                      orderByChild="owner_id"
+                      equalTo="{{currentUser}}"
+                      keys="{{keys}}">
+    </firebase-element>
+
+    <pvc-globals values="{{globals}}"></pvc-globals>
+
+    <digbird-hero-unit interval="5000"
+                       digbird-user="github:10689365"
+                       layout vertical center>
+    </digbird-hero-unit>
+
+    <div id="sign-in" hidden?="{{globals.isLoggedIn || globals.isLoadingData}}">
+      <paper-button raised on-click="{{login}}">
+        <core-icon icon="fa:github"></core-icon>
+        Sign In
+      </paper-button>
+    </div>
+
+    <div id="marketspeak">
+      <div class="panel">
+        <h1>Make your carousels fly!</h1>
+        <p>
+          We take your carousels seriously. Stop worrying about creating an
+          interface to update your carousels, or even worse, pushing to
+          production just to add new content.
+        </p>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer('dig-bird-home', {
+        login: function() {
+          this.$.baseLogin.login();
+        },
+        onLogin: function() {
+          this.globals.currentUser = this.user;
+          this.currentUser = this.user.uid;
+          this.globals.isLoggedIn = true;
+          document.querySelector('app-router').go('/admin');
+        },
+        onLoginError: function(err) {
+          console.log('An error occurred.');
+          console.error(err);
+          this.globals.isLoggedIn = false;
+        }
+      });
+    })();
+  </script>
+</polymer-element>

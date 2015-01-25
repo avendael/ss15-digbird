@@ -11,7 +11,6 @@
 <link rel="import" href="/bower_components/firebase-element/firebase-login.html">
 <link rel="import" href="/bower_components/pvc-globals/pvc-globals.html">
 <link rel="import" href="/bower_components/app-router/app-router.html">
-<link rel="import" href="/bower_components/font-awesome-polymer-icons/fa-icons.html">
 
 
 <polymer-element name="dig-bird-app">
@@ -31,7 +30,7 @@
                       location="{{globals.firebase_url}}/birdies"
                       data="{{birdies}}"
                       orderByChild="owner_id"
-                      equalTo="{{globals.currentUser.uid}}"
+                      equalTo="{{currentUser}}"
                       keys="{{keys}}">
     </firebase-element>
 
@@ -58,36 +57,25 @@
               </core-menu>
             </paper-dropdown>
           </paper-menu-button>
-          <template if="{{user}}">{{user.github.username}}</template>
+          <template if="{{user}}">
+            <paper-button on-click="{{navigateAdmin}}">
+              {{user.github.username}}
+            </paper-button>
+          </template>
         </core-toolbar>
       </div>
 
       <div class="content">
-        <app-router>
+        <app-router id="router" mode="hash">
           <app-route path="/"
+                     import="/elements/admin/home.html"
+                     element="dig-bird-home">
+          </app-route>
+          <app-route path="/admin"
                      import="/elements/admin/main.html"
                      element="dig-bird-main">
           </app-route>
         </app-router>
-      </div>
-
-      <div id="sign-in" hidden?="{{globals.isLoggedIn || globals.isLoadingData}}">
-        <paper-button raised on-click="{{login}}">
-          <core-icon icon="fa:github"></core-icon>
-          Sign In
-        </paper-button>
-      </div>
-
-      <div id="marketspeak"
-           hidden?="{{globals.isLoggedIn}}">
-        <div class="panel">
-          <h1>Make your carousels fly!</h1>
-          <p>
-            We take your carousels seriously. Stop worrying about creating an
-            interface to update your carousels, or even worse, pushing to
-            production just to add new content.
-          </p>
-        </div>
       </div>
 
       <footer layout horizontal center>
@@ -127,16 +115,23 @@
           this.$.baseLogin.logout();
           this.globals.isLoggedIn = false;
           this.globals.currentUser = null;
-          this.globals.hasKeys = false;
+          this.currentUser = null;
+          this.$.router.go('/', {replace: true});
         },
         onLogin: function() {
           this.globals.currentUser = this.user;
+          this.currentUser = this.user.uid;
           this.globals.isLoggedIn = true;
+          this.$.router.go('/admin', {replace: true});
         },
         onLoginError: function(err) {
           console.log('An error occurred.');
           console.error(err);
           this.globals.isLoggedIn = false;
+        },
+
+        navigateAdmin: function() {
+          this.$.router.go('/admin', {replace: true});
         }
       });
 

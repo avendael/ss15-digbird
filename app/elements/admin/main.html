@@ -54,7 +54,7 @@
       </div>
 
       <digbird-hero-unit interval="5000"
-                         digbird-user="github:10689365"
+                         digbird-user="{{globals.currentUser.uid}}"
                          hidden?="{{!globals.hasKeys}}"
                          layout vertical center>
       </digbird-hero-unit>
@@ -99,10 +99,10 @@
         observe: {
           birdies: 'onBirdiesChanged'
         },
-//        onBirdiesChanged: function(oldValue, newValue) {
-//          this.globals.hasKeys = this.keys.length > 0;
-//          this.globals.isLoadingData = false;
-//        },
+        onBirdiesChanged: function(oldValue, newValue) {
+          this.globals.hasKeys = this.keys.length > 0;
+          this.globals.isLoadingData = false;
+        },
 
         ready: function() {
           var _this = this;
