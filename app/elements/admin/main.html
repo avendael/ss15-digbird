@@ -7,28 +7,7 @@
 
 <polymer-element name="dig-bird-main">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-      .new-birdy {
-        padding: 20px;
-        text-align: center;
-      }
-      summary {
-        width: 100%;
-      }
-      #empty-state {
-        height: 310px;
-        text-align: center;
-      }
-      #preview {
-        height: 310px;
-      }
-      #add-button {
-        background-color: #F5F5F5;
-      }
-    </style>
+    <link rel="stylesheet" href="/styles/admin/main.css">
 
     <firebase-element id="base"
                       location="{{globals.firebase_url}}/birdies"
