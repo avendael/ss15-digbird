@@ -157,7 +157,7 @@
       #paginator {
         text-align: center;
         position: absolute;
-        bottom: 0;
+        bottom: 15px;
         width: 100%
       }
       .circle {
@@ -175,10 +175,6 @@
       }
       .circle.active {
         background-color: #e6e6e6 !important;
-      }
-
-      :host {
-        width: 100%;
       }
       ::content {
         width: 100%;
@@ -220,6 +216,15 @@
 
     <pvc-globals values="{{globals}}"></pvc-globals>
 
+
+      <div id="empty-state"
+           hidden?="{{hasKeys || isLoadingData}}"
+           layout vertical center>
+        <summary>
+          <h1>You have no Birdies yet</h1>
+          <p>Press the button below to add a new Birdy</p>
+        </summary>
+      </div>
     <core-selector id="selector"
                    selected="{{selected}}">
       <template repeat="{{key in keys}}">
@@ -252,6 +257,10 @@
         this.panels = this.keys;
         this.hasKeys = this.keys.length > 0;
         this.startCycler();
+      },
+
+      created: function() {
+        this.isLoadingData = true;
       },
       next: function(opt_Index, opt_backwards) {
         var backwards = opt_backwards == true;

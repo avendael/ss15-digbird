@@ -25,6 +25,9 @@
       #preview {
         height: 310px;
       }
+      #add-button {
+        background-color: #F5F5F5;
+      }
     </style>
 
     <firebase-element id="base"
@@ -43,25 +46,12 @@
                          hidden?="{{!hasKeys}}"
                          layout vertical center>
       </digbird-hero-unit>
-
-      <div id="empty-state"
-           hidden?="{{hasKeys || isLoadingData}}"
-           layout vertical center>
-        <summary>
-          <h1>You have no Birdies yet</h1>
-          <p>Press the button below to add a new Birdy</p>
-        </summary>
-      </div>
-
-      <digbird-loading hidden?="{{!isLoadingData}}"
-                       layout vertical center>
-      </digbird-loading>
     </div>
 
     <div id="add-button"
          class="new-birdy"
          hidden?="{{!globals.isLoggedIn}}">
-      <button on-click="{{openDialog}}">
+      <paper-button raised on-click="{{openDialog}}">
         Add new Birdy
 
         <paper-action-dialog id="birdyDialog"
@@ -82,11 +72,9 @@
             Add
           </paper-button>
         </paper-action-dialog>
-      </button>
+      </paper-button>
     </div>
 
-    <div id="marketspeak">
-    </div>
   </template>
 
   <script>
@@ -99,11 +87,6 @@
         },
         onBirdiesChanged: function(oldValue, newValue) {
           this.hasKeys = this.keys.length > 0;
-          this.isLoadingData = false;
-        },
-
-        domReady: function() {
-          this.isLoadingData = true;
         },
         openDialog: function() {
           this.$.birdyDialog.toggle();

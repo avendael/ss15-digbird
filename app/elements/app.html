@@ -11,6 +11,8 @@
 <link rel="import" href="/bower_components/firebase-element/firebase-login.html">
 <link rel="import" href="/bower_components/pvc-globals/pvc-globals.html">
 <link rel="import" href="/bower_components/app-router/app-router.html">
+<link rel="import" href="/bower_components/font-awesome-polymer-icons/fa-icons.html">
+
 
 <polymer-element name="dig-bird-app">
   <template>
@@ -56,7 +58,9 @@
       }
 
       .panel {
-        padding: 75px 15px;
+        padding: 15px 15px;
+        max-width: 1032px;
+        margin: auto;
       }
 
       #logo {
@@ -72,6 +76,26 @@
       #topbar-menu .menu {
         line-height: 16px;
       }
+
+      #sign-in {
+        text-align: center;
+        padding: 25px 0;
+      }
+
+      #marketspeak {
+        background-color: #1F1F37;
+        color: #fff;
+        padding: 75px 15px;
+      }
+
+      footer {
+        padding: 50px 0;
+        text-align: center;
+      }
+
+      footer p {
+        width: 100%;
+      }
     </style>
 
     <firebase-login id="baseLogin"
@@ -82,6 +106,14 @@
                     on-login="{{onLogin}}"
                     on-error="{{onLoginError}}">
     </firebase-login>
+
+    <firebase-element id="base"
+                      location="{{globals.firebase_url}}/birdies"
+                      data="{{birdies}}"
+                      orderByChild="owner_id"
+                      equalTo="{{globals.currentUser.uid}}"
+                      keys="{{keys}}">
+    </firebase-element>
 
     <pvc-globals values="{{globals}}"></pvc-globals>
 
@@ -110,7 +142,7 @@
         </core-toolbar>
       </div>
 
-      <div class="content">
+      <div class="content" hidden?="{{isLoadingData}}">
         <app-router>
           <app-route path="/"
                      import="/elements/admin/main.html"
@@ -118,6 +150,33 @@
           </app-route>
         </app-router>
       </div>
+
+      <div id="sign-in" hidden?="{{globals.isLoggedIn || isLoadingData}}">
+        <paper-button raised on-click="{{login}}">
+          <core-icon icon="fa:github"></core-icon>
+          Sign In
+        </paper-button>
+      </div>
+
+      <digbird-loading hidden?="{{!isLoadingData}}"
+                       layout vertical center>
+      </digbird-loading>
+
+      <div id="marketspeak"
+           hidden?="{{globals.isLoggedIn}}">
+        <div class="panel">
+          <h1>Make your carousels fly!</h1>
+          <p>
+            We take your carousels seriously. Stop worrying about creating an
+            interface to update your carousels, or even worse, pushing to
+            production just to add new content.
+          </p>
+        </div>
+      </div>
+
+      <footer layout horizontal center>
+        <p><small>Built by Digbird for Staticshowdown</small></p>
+      </footer>
     </core-header-panel>
   </template>
   <script>
@@ -125,6 +184,16 @@
       'use strict';
 
       Polymer({
+        observe: {
+          birdies: 'onBirdiesChanged'
+        },
+        onBirdiesChanged: function(oldValue, newValue) {
+          this.isLoadingData = false;
+        },
+
+        created: function() {
+          this.isLoadingData = true;
+        },
         ready: function() {
           this.globals.firebase_name = 'blazing-torch-2411'
           this.globals.firebase_url = 'https://' +
