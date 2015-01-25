@@ -35,6 +35,7 @@
                       data="{{birdies}}"
                       orderByChild="owner_id"
                       equalTo="{{globals.currentUser.uid}}"
+                      log="true"
                       keys="{{keys}}">
     </firebase-element>
 
@@ -42,8 +43,19 @@
 
     <div id="preview"
          layout vertical center>
+
+      <div id="empty-state"
+           hidden?="{{globals.hasKeys || globals.isLoadingData}}"
+           layout vertical center>
+        <summary>
+          <h1>You have no Birdies yet</h1>
+          <p>Press the button below to add a new Birdy</p>
+        </summary>
+      </div>
+
       <digbird-hero-unit interval="5000"
-                         hidden?="{{!hasKeys}}"
+                         digbird-user="github:10689365"
+                         hidden?="{{!globals.hasKeys}}"
                          layout vertical center>
       </digbird-hero-unit>
     </div>
@@ -87,8 +99,18 @@
         observe: {
           birdies: 'onBirdiesChanged'
         },
-        onBirdiesChanged: function(oldValue, newValue) {
-          this.hasKeys = this.keys.length > 0;
+//        onBirdiesChanged: function(oldValue, newValue) {
+//          this.globals.hasKeys = this.keys.length > 0;
+//          this.globals.isLoadingData = false;
+//        },
+
+        ready: function() {
+          var _this = this;
+
+          setTimeout(function() {
+            _this.isLoadingData = false;
+            console.log('setting loading to false');
+          }, 2000);
         },
         openDialog: function() {
           this.$.birdyDialog.toggle();

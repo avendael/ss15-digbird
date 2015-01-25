@@ -142,7 +142,7 @@
         </core-toolbar>
       </div>
 
-      <div class="content" hidden?="{{isLoadingData}}">
+      <div class="content" hidden?="{{globals.isLoadingData}}">
         <app-router>
           <app-route path="/"
                      import="/elements/admin/main.html"
@@ -151,14 +151,14 @@
         </app-router>
       </div>
 
-      <div id="sign-in" hidden?="{{globals.isLoggedIn || isLoadingData}}">
+      <div id="sign-in" hidden?="{{globals.isLoggedIn || globals.isLoadingData}}">
         <paper-button raised on-click="{{login}}">
           <core-icon icon="fa:github"></core-icon>
           Sign In
         </paper-button>
       </div>
 
-      <digbird-loading hidden?="{{!isLoadingData}}"
+      <digbird-loading hidden?="{{!globals.isLoadingData}}"
                        layout vertical center>
       </digbird-loading>
 
@@ -185,20 +185,24 @@
 
       Polymer({
         observe: {
-          birdies: 'onBirdiesChanged'
+          birdies: 'onBirdiesChanged',
         },
         onBirdiesChanged: function(oldValue, newValue) {
-          this.isLoadingData = false;
+          this.globals.isLoadingData = false;
+          this.globals.hasKeys = this.keys.length > 0;
+          console.log('done loading');
         },
 
-        created: function() {
-          this.isLoadingData = true;
-        },
         ready: function() {
+          var _this = this;
+          this.globals.isLoadingData = true;
           this.globals.firebase_name = 'blazing-torch-2411'
           this.globals.firebase_url = 'https://' +
                                       this.globals.firebase_name +
                                       '.firebaseio.com';
+          setTimeout(function() {
+            _this.globals.isLoadingData = false;
+          }, 2000);
         },
         login: function() {
           this.$.baseLogin.login();
@@ -207,6 +211,7 @@
           this.$.baseLogin.logout();
           this.globals.isLoggedIn = false;
           this.globals.currentUser = null;
+          this.globals.hasKeys = false;
         },
         onLogin: function() {
           this.globals.currentUser = this.user;

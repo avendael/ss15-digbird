@@ -3,7 +3,7 @@
 
 <link rel="import" href="/bower_components/core-selector/core-selector.html">
 
-<polymer-element name="digbird-hero-unit" attributes="interval">
+<polymer-element name="digbird-hero-unit" attributes="interval digbird-user">
   <template>
     <style>
       h1, h2, h3, h4, h5 {
@@ -218,21 +218,12 @@
                       data="{{birdies}}"
                       log="true"
                       orderByChild="owner_id"
-                      equalTo="{{globals.currentUser.uid || 'github:10689365'}}"
+                      equalTo="{{globals.currentUser.uid || 'digbird-user'}}"
                       keys="{{keys}}">
     </firebase-element>
 
     <pvc-globals values="{{globals}}"></pvc-globals>
 
-
-      <div id="empty-state"
-           hidden?="{{hasKeys || isLoadingData}}"
-           layout vertical center>
-        <summary>
-          <h1>You have no Birdies yet</h1>
-          <p>Press the button below to add a new Birdy</p>
-        </summary>
-      </div>
     <core-selector id="selector"
                    selected="{{selected}}">
       <template repeat="{{key in keys}}">
@@ -266,12 +257,13 @@
       },
       onBirdiesChanged: function(oldValue, newValue) {
         this.panels = this.keys;
-        this.hasKeys = this.keys.length > 0;
+//        this.hasKeys = this.keys.length > 0;
         this.startCycler();
       },
 
       created: function() {
         this.isLoadingData = true;
+        console.log(this.attributes['digbird-user']);
       },
       next: function(opt_Index, opt_backwards) {
         var backwards = opt_backwards == true;
