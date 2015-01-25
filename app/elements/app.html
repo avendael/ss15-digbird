@@ -16,87 +16,7 @@
 
 <polymer-element name="dig-bird-app">
   <template>
-    <style>
-      :host {
-        display: block;
-        font-family: RobotoDraft, "Helvetica Neue", Helvetica, Arial;
-        height: 100%;
-      }
-
-      core-header-panel {
-        height: 100%;
-      }
-
-      core-header-panel::shadow #mainContainer {
-        background: #f5f5f5;
-      }
-
-      core-toolbar {
-        background: none;
-      }
-
-      .core-header {
-        height: 60px;
-        line-height: 60px;
-        font-size: 18px;
-        padding: 0 10px;
-        background-color: #3F51B5;
-        color: #fff;
-        transition: height 0.2s;
-      }
-
-      .core-header paper-item {
-        color: #333;
-      }
-
-      .core-header paper-menu-button {
-        height: 40px;
-      }
-
-      .content {
-        background: #fff;
-      }
-
-      .panel {
-        padding: 15px 15px;
-        max-width: 1032px;
-        margin: auto;
-      }
-
-      #logo {
-      }
-
-      #logo img {
-        padding: 0;
-        width: 200px;
-        height: 45px;
-        margin-top: 15px;
-      }
-
-      #topbar-menu .menu {
-        line-height: 16px;
-      }
-
-      #sign-in {
-        text-align: center;
-        padding: 25px 0;
-      }
-
-      #marketspeak {
-        background-color: #1F1F37;
-        color: #fff;
-        padding: 75px 15px;
-      }
-
-      footer {
-        padding: 50px 0;
-        text-align: center;
-      }
-
-      footer p {
-        width: 100%;
-      }
-    </style>
+    <link rel="stylesheet" href="/styles/header.css">
 
     <firebase-login id="baseLogin"
                     user="{{user}}"
@@ -122,7 +42,7 @@
         <core-toolbar>
           <div id="logo" flex>
             <a href="#">
-              <img src="../images/digbird-white.png">
+              <img src="../images/logo.png">
             </a>
           </div>
           <paper-menu-button relative tabindex="0" id="topbar-menu">
@@ -142,7 +62,7 @@
         </core-toolbar>
       </div>
 
-      <div class="content" hidden?="{{globals.isLoadingData}}">
+      <div class="content">
         <app-router>
           <app-route path="/"
                      import="/elements/admin/main.html"
